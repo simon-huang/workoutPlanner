@@ -24,6 +24,7 @@ Once the project moves into development, the press release can be used as a touc
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  This fitness app provides a way for you to create workout templates and log completed workouts.
 
 ## Problem ##
   > Describe the problem your product solves.
