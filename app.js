@@ -1,78 +1,72 @@
 angular.module('app', ['ngRoute'])
   .config(function($routeProvider) {
     $routeProvider
-      .when('/fizzbuzz', {
-        templateUrl: 'fizzbuzz.html',
-        controller: 'fizzbuzzCtrl'
+      .when('/templates', {
+        templateUrl: 'templates.html',
+        controller: 'templatesCtrl'
       })
-      .when('/fozzbazz', {
-        templateUrl: 'fozzbazz.html',
-        controller: 'fozzbazzCtrl'
+      .when('/new', {
+        templateUrl: 'new.html',
+        controller: 'newCtrl'
       })
       .otherwise({
-        redirectTo: '/fizzbuzz'
+        redirectTo: '/templates'
       });
   })
-// DO NOT MODIFY CODE ABOVE THIS LINE
 
-/*  HINT: Make sure your controllers, methods, and variables 
-    are named what $routeProvider and the partials are expecting  */
+  .factory('Template', function() {
 
-  .factory('counter', function() {
-    var count = 0;
-
-    var increment = function() {
-      count++;
+    var add = function() {
     };
 
-    var currentCount = function() {
-      return count;
+    var remove = function() {
     };
 
-    var fizzDisplay = function() {
-      if (count === 0) {
-        return count;
-      } else if (count % 3 === 0 && count % 5 === 0) {
-        return 'FIZZBUZZ';
-      } else if (count % 3 === 0) {
-        return 'FIZZ';
-      } else if (count % 5 === 0) {
-        return 'BUZZ';
-      } 
-      return count;
-    };
-
-    var fozzDisplay = function() {
-      if (count === 0) {
-        return count;
-      } else if (count % 4 === 0 && count % 6 === 0) {
-        return 'FOZZBAZZ';
-      } else if (count % 4 === 0) {
-        return 'FOZZ';
-      } else if (count % 6 === 0) {
-        return 'BAZZ';
-      } 
-      return count;
+    var edit = function() {
     };
 
     return {
-      increment: increment,
-      currentCount: currentCount,
-      fizzDisplay: fizzDisplay,
-      fozzDisplay: fozzDisplay
+      add: add,
+      remove: remove
     };
   })
-  .controller('fizzbuzzCtrl', function($scope, counter) {
-    $scope.display = counter.fizzDisplay();
-    $scope.increment = function() {
-      counter.increment();
-      $scope.display = counter.fizzDisplay();
+  .controller('newCtrl', function($scope, Template) {
+    $scope.data = {};
+    $scope.data.selected = null;
+    $scope.editing = false;
+    $scope.data.exercises = [{name: 'Deadlift', amount: '100x5x5'}, {name: 'Leg Curl', amount: '100x8x3'}];
+    $scope.select = function(exercise) {
+      if ($scope.data.selected === exercise) {
+        $scope.data.selected = null;
+      } else {
+        $scope.data.selected = exercise;
+      }
+      console.log($scope.data.selected);
+    }
+    var findIndex = function() {
+      for (var i = 0; i < $scope.data.exercises.length; i++) {
+        if ($scope.data.exercises[i].name === $scope.data.selected.name) {
+          return i;
+        }
+      }
+    };
+
+    $scope.add = function() {
+      
+    };
+    $scope.remove = function() {
+      var index = findIndex();
+      $scope.data.exercises.splice(index,1);
+      $scope.data.selected = null;
+    };
+    $scope.edit = function() {
+      $scope.editing = !$scope.editing;
+    };
+    $scope.update = function() {
+      console.log($scope.exercise);
     };
   })
-  .controller('fozzbazzCtrl', function($scope, counter) {
-    $scope.display = counter.fozzDisplay();
-    $scope.increment = function() {
-      counter.increment();
-      $scope.display = counter.fozzDisplay();
-    };
+  .controller('templatesCtrl', function($scope, Template) {
+    
   });
+  

@@ -4,18 +4,16 @@
     <meta charset="utf-8" />
     <title>Workout</title>
     <!-- link rel="stylesheet" type="text/css" href="styles/style.css" /-->
-    <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular-route/angular-route.js"></script>
+    <script src="lib/angular.js"></script>
+    <script src="lib/angular-route.js"></script>
     <script src="app.js"></script>
   </head>
   <body>
     <h1>Workout</h1>
     <nav>
-        <a href="#/fizzbuzz">Templates</a>
-        <a href="#/fozzbazz">New Workout</a>
+        <a href="#/templates">Templates</a>
+        <a href="#/new">New Workout</a>
     </nav>
-    <!-- the ng-view directive is where our templates will be loaded into when naviagted to -->
     <div ng-view></div>
-
   </body>
 </html>
