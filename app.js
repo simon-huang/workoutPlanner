@@ -13,24 +13,15 @@ angular.module('app', ['ngRoute', 'ui.sortable'])
         redirectTo: '/templates'
       });
   })
-
   .factory('Template', function() {
-
+    var exer
     var add = function() {
     };
-
-    var remove = function() {
-    };
-
-    var edit = function() {
-    };
-
     return {
-      add: add,
-      remove: remove
+      add: add
     };
   })
-  .controller('newCtrl', function($scope) {
+  .controller('newCtrl', function($scope, $http, $location) {
     $scope.data = {};
     $scope.selected = null;
     $scope.adding = false;
@@ -111,9 +102,26 @@ angular.module('app', ['ngRoute', 'ui.sortable'])
     };
     $scope.loadSample = function(workout) {
       console.log(workout);
-      $scope.data = workout;
+      $scope.data = JSON.parse(JSON.stringify(workout));
       $scope.sampling = !$scope.sampling;
     };
+    $scope.save = function() {
+      $http({
+        method: 'POST',
+        url: '/api/workouts',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+          },
+        data: JSON.stringify($scope.data)
+      })
+      .then(function() {
+        console.log('success');
+        $scope.data = {};
+      })
+      .catch(function(error) {
+        console.log('error: ', error);
+      });
+    }
   })
   .controller('templatesCtrl', function($scope, Template) {
     

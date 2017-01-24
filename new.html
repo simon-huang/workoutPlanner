@@ -3,9 +3,9 @@
       <nav>
         <a ng-click='adding = !adding'>Add</a>
         <a ng-click='selected && remove()'>Remove</a>
-        <a ng-click=''>Remove All</a>
+        <a ng-click='data = {}'>Remove All</a>
         <a ng-click='selected && toggleEdit()'>Edit</a>
-        <a ng-click=''>Save</a>
+        <a ng-click='save()'>Save</a>
         <a ng-click='sampling = !sampling'>Sample Workouts</a>
       </nav>
       <h4 ng-model="data.name" style="margin:0px 30px;padding:0;l">{{data.name}}</h2>
