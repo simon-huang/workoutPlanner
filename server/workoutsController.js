@@ -22,7 +22,7 @@ module.exports = {
     var newWorkout = {
       name: req.body.name,
       workouts: req.body.exercises,
-      user: public
+      user: 'public'
     };
     createWorkout(newWorkout)
       .then(function (createdWorkout) {

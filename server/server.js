@@ -15,7 +15,7 @@ var middleware = function (app, express) {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
-  app.use(express.static(__dirname)); //+ '/../../client'
+  app.use(express.static(__dirname + '/..'));
 };
 middleware(app, express);
 
@@ -64,9 +64,7 @@ app.use(helpers.errorHandler);
 
 
 // start listening to requests on port 8000
-app.listen(8080, function() {
-  console.log('hi');
-});
+app.listen(8080);
 
 
-
+console.log('now listening');
