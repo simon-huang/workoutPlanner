@@ -1,22 +1,29 @@
 <div ng-controller="newCtrl">
     <div>
       <nav>
-        <a ng-click='add()'>Add</a>
+        <a ng-click='adding = !adding'>Add</a>
         <a ng-click='data.selected && remove()'>Remove</a>
         <a ng-click='data.selected && edit()'>Edit</a>
       </nav>
-      <div class='exercises'>
-        <div class='exercise' ng-repeat='exercise in data.exercises' ng-click='select(exercise)'>
-          <span class="name">{{ exercise.name }}</span> 
-          <span class="amount">{{ exercise.amount }}</span>
-        </div>
-      </div>
-      <form ng-submit='update' ng-show='editing'>
+      <ul ui-sortable style="margin:0;padding:0;list-style: none" ng-model="data.exercises">
+        <li ng-repeat="exercise in data.exercises" style="margin:0;padding:0;list-style: none" ng-click='select(exercise)'>{{ exercise.name + ': ' + exercise.amount }}</li>
+      </ul>
+
+      <form ng-submit='update()' ng-show='editing'>
         <label>
           Activity:
-          <input ng-model='exercise.name' value={{data.selected.name}}>
+          <input ng-model='data.updating.name' value={{data.selected.name}}>
           Sets/Reps:
-          <input ng-model='exercise.amount' value={{data.selected.amount}}>
+          <input ng-model='data.updating.amount' value={{data.selected.amount}}>
+          <button>Update</button>
+        </label>
+      </form>
+      <form ng-submit='' ng-show='adding'>
+        <label>
+          Activity:
+          <input ng-model='data.updating.name'>
+          Sets/Reps:
+          <input ng-model='data.updating.amount'>
           <button>Update</button>
         </label>
       </form>

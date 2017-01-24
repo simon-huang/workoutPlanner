@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute'])
+angular.module('app', ['ngRoute', 'ui.sortable'])
   .config(function($routeProvider) {
     $routeProvider
       .when('/templates', {
@@ -30,16 +30,20 @@ angular.module('app', ['ngRoute'])
       remove: remove
     };
   })
-  .controller('newCtrl', function($scope, Template) {
+  .controller('newCtrl', function($scope) {
     $scope.data = {};
     $scope.data.selected = null;
     $scope.editing = false;
-    $scope.data.exercises = [{name: 'Deadlift', amount: '100x5x5'}, {name: 'Leg Curl', amount: '100x8x3'}];
+    $scope.data.updating = {};
+    $scope.data.exercises = [{name: 'Deadlift', amount: '100x5x5'}, {name: 'Leg Curl', amount: '100x8x3'}, {name: 'Leg Press', amount: '100x5x5'}, {name: 'Calf Raise', amount: '100x8x3'}];
     $scope.select = function(exercise) {
       if ($scope.data.selected === exercise) {
         $scope.data.selected = null;
+        $scope.data.updating = {};
       } else {
         $scope.data.selected = exercise;
+        $scope.data.updating.name = exercise.name;
+        $scope.data.updating.amount = exercise.amount;
       }
       console.log($scope.data.selected);
     }
@@ -50,7 +54,7 @@ angular.module('app', ['ngRoute'])
         }
       }
     };
-
+    $scope.adding = false;
     $scope.add = function() {
       
     };
@@ -63,7 +67,12 @@ angular.module('app', ['ngRoute'])
       $scope.editing = !$scope.editing;
     };
     $scope.update = function() {
-      console.log($scope.exercise);
+      console.log('updating ', $scope.data.updating);
+      console.log('updating ', $scope.data.selected);
+      $scope.data.selected.name = $scope.data.updating.name;
+      $scope.data.selected.amount = $scope.data.updating.amount;
+      $scope.data.updating = {};
+      $scope.editing = !$scope.editing;
     };
   })
   .controller('templatesCtrl', function($scope, Template) {
