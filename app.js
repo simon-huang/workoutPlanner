@@ -32,47 +32,87 @@ angular.module('app', ['ngRoute', 'ui.sortable'])
   })
   .controller('newCtrl', function($scope) {
     $scope.data = {};
-    $scope.data.selected = null;
+    $scope.selected = null;
+    $scope.adding = false;
+    $scope.added = {};
     $scope.editing = false;
-    $scope.data.updating = {};
-    $scope.data.exercises = [{name: 'Deadlift', amount: '100x5x5'}, {name: 'Leg Curl', amount: '100x8x3'}, {name: 'Leg Press', amount: '100x5x5'}, {name: 'Calf Raise', amount: '100x8x3'}];
+    $scope.edited = {};
+    $scope.sampling = false;
+    $scope.samples = {};
+
+    $scope.samples = {
+      list: ['Leg Day', 'Push Day', 'Pull Day'],
+      list2: [
+        {name: 'Leg Day', exercises: [
+          {name: 'Deadlift', amount: '100x5x5'}, 
+          {name: 'Leg Curl', amount: '100x8x3'}, 
+          {name: 'Leg Press', amount: '100x5x5'}, 
+          {name: 'Calf Raise', amount: '100x8x3'}
+          ]},
+        {name: 'Push Day', exercises: [
+          {name: 'Bench Press', amount: '100x5x5'}, 
+          {name: 'Incline Bench Press', amount: '100x8x3'}, 
+          {name: 'Military Press', amount: '100x5x5'}, 
+          {name: 'Triceps Pushdown', amount: '100x8x3'}
+        ]},
+        {name: 'Pull Day', exercises: [
+          {name: 'Deadlift', amount: '100x5x5'}, 
+          {name: 'Lat Pulldown', amount: '100x5x5'}, 
+          {name: 'Dumbbell Rows', amount: '100x8x3'}, 
+          {name: 'Dumbbell Curls', amount: '100x8x3'}
+        ]}
+      ]
+    };
+
+    $scope.data = {
+      name:'Leg Day',
+      exercises: [{name: 'Deadlift', amount: '100x5x5'}, 
+        {name: 'Leg Curl', amount: '100x8x3'}, 
+        {name: 'Leg Press', amount: '100x5x5'}, 
+        {name: 'Calf Raise', amount: '100x8x3'}]
+    }; 
+    
     $scope.select = function(exercise) {
-      if ($scope.data.selected === exercise) {
-        $scope.data.selected = null;
-        $scope.data.updating = {};
+      if ($scope.selected === exercise) {
+        $scope.selected = null;
+        $scope.edited = {};
       } else {
-        $scope.data.selected = exercise;
-        $scope.data.updating.name = exercise.name;
-        $scope.data.updating.amount = exercise.amount;
+        $scope.selected = exercise;
+        $scope.edited.name = exercise.name;
+        $scope.edited.amount = exercise.amount;
       }
-      console.log($scope.data.selected);
+      console.log($scope.selected);
     }
     var findIndex = function() {
       for (var i = 0; i < $scope.data.exercises.length; i++) {
-        if ($scope.data.exercises[i].name === $scope.data.selected.name) {
+        if ($scope.data.exercises[i].name === $scope.selected.name) {
           return i;
         }
       }
     };
-    $scope.adding = false;
     $scope.add = function() {
-      
+      $scope.data.exercises.push($scope.data.added);
+      $scope.data.added = {};
+      console.log($scope.data.exercises);
     };
     $scope.remove = function() {
       var index = findIndex();
       $scope.data.exercises.splice(index,1);
-      $scope.data.selected = null;
+      $scope.selected = null;
+    };
+    $scope.toggleEdit = function() {
+      $scope.editing = !$scope.editing;
     };
     $scope.edit = function() {
-      $scope.editing = !$scope.editing;
+      $scope.selected.name = $scope.edited.name;
+      $scope.selected.amount = $scope.edited.amount;
+      $scope.edited = {};
+      $scope.toggleEdit();
     };
-    $scope.update = function() {
-      console.log('updating ', $scope.data.updating);
-      console.log('updating ', $scope.data.selected);
-      $scope.data.selected.name = $scope.data.updating.name;
-      $scope.data.selected.amount = $scope.data.updating.amount;
-      $scope.data.updating = {};
-      $scope.editing = !$scope.editing;
+    $scope.loadSample = function(workout) {
+      console.log(workout);
+      $scope.data = workout;
+      $scope.sampling = !$scope.sampling;
     };
   })
   .controller('templatesCtrl', function($scope, Template) {

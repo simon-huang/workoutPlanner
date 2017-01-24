@@ -2,30 +2,40 @@
     <div>
       <nav>
         <a ng-click='adding = !adding'>Add</a>
-        <a ng-click='data.selected && remove()'>Remove</a>
-        <a ng-click='data.selected && edit()'>Edit</a>
+        <a ng-click='selected && remove()'>Remove</a>
+        <a ng-click=''>Remove All</a>
+        <a ng-click='selected && toggleEdit()'>Edit</a>
+        <a ng-click=''>Save</a>
+        <a ng-click='sampling = !sampling'>Sample Workouts</a>
       </nav>
-      <ul ui-sortable style="margin:0;padding:0;list-style: none" ng-model="data.exercises">
-        <li ng-repeat="exercise in data.exercises" style="margin:0;padding:0;list-style: none" ng-click='select(exercise)'>{{ exercise.name + ': ' + exercise.amount }}</li>
+      <h4 ng-model="data.name" style="margin:0px 30px;padding:0;l">{{data.name}}</h2>
+
+      <ul ui-sortable style="margin:0;padding:0;list-style:none" ng-model="data.exercises">
+        <li ng-repeat="exercise in data.exercises" style="margin:0;padding:0;list-style:none" ng-click='select(exercise)'>{{ exercise.name + ': ' + exercise.amount }}</li>
       </ul>
 
-      <form ng-submit='update()' ng-show='editing'>
+      <form ng-submit='edit()' ng-show='editing'>
         <label>
           Activity:
-          <input ng-model='data.updating.name' value={{data.selected.name}}>
+          <input ng-model='edited.name' value={{selected.name}}>
           Sets/Reps:
-          <input ng-model='data.updating.amount' value={{data.selected.amount}}>
+          <input ng-model='edited.amount' value={{selected.amount}}>
           <button>Update</button>
         </label>
       </form>
-      <form ng-submit='' ng-show='adding'>
+      <form ng-submit='add()' ng-show='adding'>
         <label>
-          Activity:
-          <input ng-model='data.updating.name'>
+          New Activity:
+          <input ng-model='data.added.name'>
           Sets/Reps:
-          <input ng-model='data.updating.amount'>
-          <button>Update</button>
+          <input ng-model='data.added.amount'>
+          <button>Add</button>
         </label>
       </form>
+      
+      <ul style="margin:0;padding:0;list-style:none" ng-model="samples.list" ng-show='sampling'>
+        <li ng-repeat="workout in samples.list2" style="margin:0;padding:0;list-style:none" ng-click='loadSample(workout)'>{{ workout.name }}</li>
+      </ul>
+
     </div>
 </div>
