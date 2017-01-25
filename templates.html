@@ -1,4 +1,12 @@
 <!-- DO NOT MODIFY THIS FILE -->
 <div ng-controller="templatesCtrl">
-
+  <div>
+    <ul style="margin:0;padding:0;list-style:none" ng-model="data.list">
+      <li ng-repeat="workout in data.list" style="margin:0;padding:0;list-style:none" ng-click='selecting(workout)'>{{ workout.name }}</li>
+    </ul>
+    <h4 ng-model="selected" style="margin:0px 30px;padding:0;l">{{selected.name}}</h2>
+    <ul style="margin:0;padding:0;list-style:none" ng-model="selected">
+        <li ng-repeat="exercise in selected.exercises" style="margin:0;padding:0;list-style:none" ng-click='loadSample(workout)'>{{ exercise.name + ': ' + exercise.amount }}</li>
+    </ul>
+  </div>
 </div>

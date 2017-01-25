@@ -106,24 +106,56 @@ angular.module('app', ['ngRoute', 'ui.sortable'])
       $scope.sampling = !$scope.sampling;
     };
     $scope.save = function() {
+      console.log($scope.data, typeof $scope.data);
+      console.log(JSON.stringify($scope.data), typeof JSON.stringify($scope.data));
       $http({
         method: 'POST',
         url: '/api/workouts',
+        data: JSON.stringify($scope.data),
         header: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
           },
-        data: JSON.stringify($scope.data)
       })
       .then(function() {
         console.log('success');
-        $scope.data = {};
+        $scope.data = {name: 'Filler', exercises: []};
       })
       .catch(function(error) {
         console.log('error: ', error);
       });
     }
   })
-  .controller('templatesCtrl', function($scope, Template) {
-    
+  .controller('templatesCtrl', function($scope, $http) {
+    $scope.data = {list: []};
+    $scope.selected = null;
+    $scope.selecting = function(which) {
+      console.log('did');
+      $scope.selected = which;
+
+    };
+    $scope.retrieve = function() {
+      $http({
+        method: 'GET',
+        url: '/api/workouts'
+      })
+      .then(function(res) {
+        // console.log(res.data[res.data.length-1].exercises, typeof res.data[res.data.length-1].exercises);
+        res.data.forEach(function(w) {
+          $scope.data.list.push({
+            name: w.name,
+            exercises: JSON.parse(w.exercises)
+          });
+        });
+        // $scope.data.workouts = res.data;
+        console.log($scope.data.list);
+        // console.log(typeof $scope.data.list[2].workouts);
+        // console.log(JSON.parse($scope.data.list[2].workouts));
+      })
+      .catch(function(error) {
+        console.log('error: ', error);
+      });
+    }
+
+    $scope.retrieve();
   });
   
