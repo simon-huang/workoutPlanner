@@ -23,9 +23,11 @@ angular.module('app', ['ngRoute', 'ui.sortable'])
   })
   .controller('newCtrl', function($scope, $http, $location) {
     $scope.data = {};
+    $scope.data.name = "";
+    $scope.data.exercises = [];
     $scope.selected = null;
     $scope.adding = false;
-    $scope.added = {};
+    $scope.added = {name:null, amount:null};
     $scope.editing = false;
     $scope.edited = {};
     $scope.sampling = false;
@@ -56,11 +58,8 @@ angular.module('app', ['ngRoute', 'ui.sortable'])
     };
 
     $scope.data = {
-      name:'Leg Day',
-      exercises: [{name: 'Deadlift', amount: '100x5x5'}, 
-        {name: 'Leg Curl', amount: '100x8x3'}, 
-        {name: 'Leg Press', amount: '100x5x5'}, 
-        {name: 'Calf Raise', amount: '100x8x3'}]
+      name:'New Workout',
+      exercises: []
     }; 
     
     $scope.select = function(exercise) {
@@ -118,7 +117,7 @@ angular.module('app', ['ngRoute', 'ui.sortable'])
       })
       .then(function() {
         console.log('success');
-        $scope.data = {name: 'Filler', exercises: []};
+        $scope.data = {name: 'New Workout', exercises: []};
       })
       .catch(function(error) {
         console.log('error: ', error);
