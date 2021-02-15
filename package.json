@@ -5,7 +5,7 @@
   "author": "Simon Huang",
   "license": "UNLICENCED",
   "scripts": {
-    "start": "node index.js"
+    "start": "node ./server/server.js"
   },
   "dependencies": {
     "angular-ui-sortable": "^0.19.0",
